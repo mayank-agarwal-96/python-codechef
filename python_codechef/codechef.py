@@ -63,3 +63,22 @@ class Codechef:
 			print contest_data
 			contests.append(contest_data)
 				
+
+	@staticmethod
+	def get_problem_details(code):
+		url = "https://www.codechef.com/problems/"+ code
+
+		problem = requests.get(url)
+		text = problem.text
+		soup = BeautifulSoup(text,"html.parser")
+
+		content = soup.findAll('div',{'class' : 'content'})
+		remove_string = "All submissions for this problem are available. Read problems statements in Mandarin Chinese , Russian and Vietnamese as well."
+		statement = content[1].text.encode('utf-8')
+		statement = statement.replace(remove_string,"")
+		print type(statement)
+		data = {
+			'statement': statement,
+		}
+
+		return data
