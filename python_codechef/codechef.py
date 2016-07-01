@@ -3,14 +3,19 @@ from bs4 import BeautifulSoup
 
 class Codechef:
 
+	@staticmethod
+	def get_html(url):
+		page = requests.get(url)
+		plain_text = page.text
+		soup = BeautifulSoup(plain_text,"html.parser")
+
+		return soup
 
 	@staticmethod	
 	def get_problems(type):
 
 		url = "https://www.codechef.com/problems"+'/' + type
-		page = requests.get(url)
-		plain_text = page.text
-		soup = BeautifulSoup(plain_text,"html.parser")
+		soup = Codechef.get_html(url)
 
 		table = soup.findAll('table',{'class' : 'dataTable'})[0]
 		rows = table.findAll('tr',{'class' : 'problemrow'})
@@ -35,9 +40,7 @@ class Codechef:
 	def get_contests(time):
 
 		url = "https://www.codechef.com/contests"
-		page = requests.get(url)
-		plain_text = page.text
-		soup = BeautifulSoup(plain_text,"html.parser")
+		soup = Codechef.get_html(url)
 
 		tables = soup.findAll('table',{'class' : 'dataTable'})
 
@@ -67,10 +70,7 @@ class Codechef:
 	@staticmethod
 	def get_problem_details(code):
 		url = "https://www.codechef.com/problems/"+ code
-
-		problem = requests.get(url)
-		text = problem.text
-		soup = BeautifulSoup(text,"html.parser")
+		soup = Codechef.get_html(url)
 
 		content = soup.findAll('div',{'class' : 'content'})
 		remove_string = "All submissions for this problem are available. Read problems statements in Mandarin Chinese , Russian and Vietnamese as well."
@@ -82,3 +82,5 @@ class Codechef:
 		}
 
 		return data
+X = Codechef.get_problem_details('ACBALL')
+print X['statement']
