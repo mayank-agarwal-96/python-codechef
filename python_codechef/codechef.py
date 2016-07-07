@@ -86,7 +86,7 @@ class Codechef:
 	
 	@staticmethod
 	def profile_data(username):
-		url = "https://www.codechef.com/users/"+username
+		url = "https://www.codechef.com/users/" + username
 		soup = Codechef.get_html(url)
 
 		content	= soup.findAll('div',{'class' : 'profile'})	
@@ -105,4 +105,3 @@ class Codechef:
 				data[key]=basic_info[j][1].text.encode('utf-8')
 
 		return data
-		
