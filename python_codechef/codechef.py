@@ -82,3 +82,27 @@ class Codechef:
 		}
 
 		return data
+
+	
+	@staticmethod
+	def profile_data(username):
+		url = "https://www.codechef.com/users/"+username
+		soup = Codechef.get_html(url)
+
+		content	= soup.findAll('div',{'class' : 'profile'})	
+
+		rows = content[0].findAll('tr')
+		row_data = [ row.findAll('td') for row in rows ]
+		basic_info = row_data[1:7]
+
+		data = {}
+
+		for j in range(6):
+			key = str(basic_info[j][0].text.encode('utf-8')).strip(':')
+			if key == 'Country':
+				data[key]=basic_info[j][1].span.text.encode('utf-8')
+			else:
+				data[key]=basic_info[j][1].text.encode('utf-8')
+
+		return data
+		
