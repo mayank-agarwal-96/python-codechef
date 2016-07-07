@@ -82,5 +82,3 @@ class Codechef:
 		}
 
 		return data
-X = Codechef.get_problem_details('ACBALL')
-print X['statement']
